@@ -1,0 +1,25 @@
+node {
+
+     try {
+
+        stage('Checkout') {
+            checkout scm
+        }
+
+        stage('Build'){
+            sh "sbt run"
+        }
+
+        stage('SonarQube analysis') {
+           sh "sbt -Dsonar.host.url=http://192.168.99.102:9000 sonarScan"
+        }
+
+        stage('CleanWorkspace') {
+            cleanWs()
+        }
+
+     } catch (e) {
+         currentBuild.result = "FAILED"
+         throw e
+     }
+}
