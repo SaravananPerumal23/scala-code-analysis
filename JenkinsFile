@@ -1,18 +1,22 @@
 node {
 
      try {
-
+          stage('Initialize'){
+            def sbtHome = tool 'mySbt'
+            env.PATH = "${sbtHome}/bin:${env.PATH}"
+        }
+        
         stage('Checkout') {
             checkout scm
         }
 
         stage('Build') {
         echo "Compiling..."
-        sh "${tool name: 'sbt', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt compile"
+        sh "sbt compile"
         }
 
         stage('SonarQube analysis') {
-          sh "${tool name: 'sbt', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt -Dsonar.host.url=http://192.168.99.102:9000 sonarScan"
+          sh "sbt -Dsonar.host.url=http://192.168.99.102:9000 sonarScan"
         }
 
         stage('CleanWorkspace') {
