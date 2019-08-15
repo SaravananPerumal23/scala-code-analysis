@@ -1,7 +1,7 @@
 node {
 
      try {
-          stage('Initialize'){
+          stage('Initialize') {
             def sbtHome = tool 'mySbt'
             env.PATH = "${sbtHome}/bin:${env.PATH}"
         }
@@ -11,8 +11,13 @@ node {
         }
 
         stage('Build') {
-        echo "Compiling..."
-        sh "sbt compile"
+            echo "Compiling..."
+            sh "sbt compile"
+        }
+
+        stage('Unit Test') {
+            echo "Compiling..."
+            sh "sbt test"
         }
 
         stage('SonarQube analysis') {
