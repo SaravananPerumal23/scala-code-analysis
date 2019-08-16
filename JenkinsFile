@@ -21,7 +21,7 @@ node {
         }
 
         stage('SonarQube analysis') {
-          sh "sbt -Dsonar.host.url=http://192.168.99.102:9000 sonarScan"
+          sh "sbt sonarScan"
         }
 
         stage('CleanWorkspace') {

@@ -1,1 +1,1 @@
-FROM sonarqube:6.7-alpine
+FROM mwizner/sonarqube-scala-plugins:3.7.0-full
